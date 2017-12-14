@@ -1,0 +1,24 @@
+{
+  "name": "cart",
+  "version": "1.0.0",
+  "description": "A simple shopping cart.",
+  "main": "app.js",
+  "dependencies": {
+    "live-server": "^1.2.0",
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mindphreaked/cart.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mindphreaked/cart/issues"
+  },
+  "homepage": "https://github.com/mindphreaked/cart#readme"
+}
