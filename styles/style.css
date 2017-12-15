@@ -21,3 +21,9 @@
 h1 {
     text-align: center;
 }
+
+.quantity {
+    width: 57px;
+    float: right;
+    margin: 5px;
+}

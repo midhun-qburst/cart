@@ -1,5 +1,22 @@
+// class Catalog {
+//     constructor(id,company,name, type, size,price,discount) {
+//         this.id= 1,
+//         this.company= company,
+//         this.name= name,
+//         this.type= type,
+//         this.size= 'Medium',
+//         this.price= price,
+//         this.discount= discount,
+//         this.isSelected= false
+//     }
+//     get discount(){
+//         return element.price*1 - (element.discount*element.price)/100 
+//     }
+    
+// }
 
-const productCatalog = [
+// let productCatalog = new Catalog[];
+ const productCatalog = [
     {
         id: 1,
         company: 'Kawasaki',
@@ -76,16 +93,19 @@ const filterProducts = () => {
 
     foundProducts = _.forEach(foundProducts, (element) => {
         let s = element;
+        let discountedRate = element.price*1 - (element.discount*element.price)/100;
         $('#foundList').append('<div class="card-block col-lg-3 book-tile" >' +
             '<div class="test">' +
             '<span class="book-title">' + element.name +
-            '<input type="checkbox" id="' + element.id + '">' +
+            '<input type="checkbox" class="' + element.id + '">' +
+            '<input placeholder="Quantity" class="quantity" type="text" id="' + element.id + '">' +            
             '</span>' +
-            '<span>' + element.company + '</span>' +
-            '<span>' + element.price + '</span>' +
-            '<span>' + element.type + '</span>' +
-            //  '<span>' + authorMail + '</span>' +
-            //  '<span>' + authorPhone + '</span>' +
+            '<span> Company: ' + element.company + '</span>' +
+            '<span> Type: ' + element.type + '</span>' +
+            '<span> Size: ' + element.size + '</span>' +
+            '<span> Price: ' + element.price + '/-</span>' +           
+            '<span> Discount: ' + element.discount + '%</span>' +
+            '<span> Discounted Price: ' + discountedRate + '/-</span>' +    
             '</div>' +
             '</div>'
         );
@@ -100,7 +120,7 @@ const filterProducts = () => {
 
 const addItems = () => {
     const idArray = foundProducts.map((element) => {
-        if ($('#' + element.id).is(":checked")) {
+        if ($('.' + element.id).is(":checked")) {
             return element.id;
         }
         return null;
@@ -108,5 +128,21 @@ const addItems = () => {
     ).filter((num) => {
         return num != null;
     });
+
+    const quantityArray = foundProducts.map((element) => {
+        if ($('.' + element.id).is(":checked")) {
+            return $('#' + element.id).val();
+        }
+        return null;
+    }
+    ).filter((num) => {
+        return num != null;
+    });
     console.log(idArray);
+    console.log(quantityArray);
+
+    
+    
+
+
 }
