@@ -5,7 +5,8 @@
   "main": "app.js",
   "dependencies": {
     "live-server": "^1.2.0",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "requirejs": "^2.3.5"
   },
   "devDependencies": {},
   "scripts": {
