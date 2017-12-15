@@ -12,11 +12,11 @@
 //     get discount(){
 //         return element.price*1 - (element.discount*element.price)/100 
 //     }
-    
+
 // }
 
 // let productCatalog = new Catalog[];
- const productCatalog = [
+const productCatalog = [
     {
         id: 1,
         company: 'Kawasaki',
@@ -93,19 +93,20 @@ const filterProducts = () => {
 
     foundProducts = _.forEach(foundProducts, (element) => {
         let s = element;
-        let discountedRate = element.price*1 - (element.discount*element.price)/100;
+        let discountedRate = element.price * 1 - (element.discount * element.price) / 100;
         $('#foundList').append('<div class="card-block col-lg-3 book-tile" >' +
             '<div class="test">' +
-            '<span class="book-title">' + element.name +
             '<input type="checkbox" class="' + element.id + '">' +
-            '<input placeholder="Quantity" class="quantity" type="text" id="' + element.id + '">' +            
+            
+            '<span class="book-title">' + element.name +
+            '<input value="1" class="quantity" type="number" min="0" id="' + element.id + '">' +
             '</span>' +
             '<span> Company: ' + element.company + '</span>' +
             '<span> Type: ' + element.type + '</span>' +
             '<span> Size: ' + element.size + '</span>' +
-            '<span> Price: ' + element.price + '/-</span>' +           
+            '<span> Price: ' + element.price + '/-</span>' +
             '<span> Discount: ' + element.discount + '%</span>' +
-            '<span> Discounted Price: ' + discountedRate + '/-</span>' +    
+            '<span> Discounted Price: ' + discountedRate + '/-</span>' +
             '</div>' +
             '</div>'
         );
@@ -119,7 +120,9 @@ const filterProducts = () => {
 }
 
 const addItems = () => {
-    const idArray = foundProducts.map((element) => {
+    let quantityArray = [];
+    let idArray = [];
+    idArray = foundProducts.map((element) => {
         if ($('.' + element.id).is(":checked")) {
             return element.id;
         }
@@ -129,20 +132,59 @@ const addItems = () => {
         return num != null;
     });
 
-    const quantityArray = foundProducts.map((element) => {
+    quantityArray = _.compact(foundProducts.map((element) => {
         if ($('.' + element.id).is(":checked")) {
-            return $('#' + element.id).val();
+            return parseInt($('#' + element.id).val());
         }
         return null;
     }
-    ).filter((num) => {
-        return num != null;
-    });
+    ))
     console.log(idArray);
     console.log(quantityArray);
-
+    localStorage.setItem('idArray', JSON.stringify(idArray));
+    localStorage.setItem('quantityArray', JSON.stringify(quantityArray));
     
     
+}
 
+const cartOnload = () => {
 
+    let quantityArray = JSON.parse(localStorage.getItem('quantityArray'));
+    let idArray = JSON.parse(localStorage.getItem('idArray'));
+    let i = 0;
+    
+    let totalPrice = 0;
+    let MRPTotal = 0;
+    idArray.map((num) => {
+        let gstOfProduct = 0;
+        let quant = quantityArray[i];
+        i++;
+        let product = _.find(foundProducts, {id:num});
+        gstOfProduct = (gst[product.type] * product.price) / 100;
+         discountedRate = product.price * 1 - (product.discount * product.price) / 100;
+        let finalPrice = discountedRate + gstOfProduct * quant ;
+        
+
+        $('#shoppingCart').append('<div class="card-block col-lg-3 book-tile" >' +
+            '<div class="test">' +
+            '<span class="book-title">' + product.name +
+            '</span>' +
+            '<span> Company: ' + product.company + '</span>' +
+            '<span> Type: ' + product.type + '</span>' +
+            '<span> Size: ' + product.size + '</span>' +
+            '<span> Price: ' + product.price + '/-</span>' +
+            '<span> Discount: ' + product.discount + '%</span>' +
+            '<span> Discounted Price: ' + discountedRate + '/-</span>' +
+            '<span> Final price (inclusive of GST '+ gst[product.type] +'%) :' + finalPrice + '</span>' +            
+            '</div>' +
+            '</div>'
+        );
+        totalPrice = totalPrice + finalPrice*quant;
+        MRPTotal = MRPTotal + product.price * quant;
+    }
+    );
+    $('#finalPrice').append( '<div>Grand Total : ' + totalPrice + '</div>'+
+                                '<div> You saved Rs.' + (MRPTotal-totalPrice)     )
+    
+    
 }

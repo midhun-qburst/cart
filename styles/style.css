@@ -3,6 +3,7 @@
     display: inline-block;
 }
 .book-title {
+    padding: 5px;
     border: blue;
     background-color: rosybrown;
     border-color: rgb(202, 3, 3);
@@ -16,6 +17,7 @@
 }
 /* Border of tile */
 .book-tile > div{
+    padding: 10px;
     border: 1px solid rosybrown;    
 }
 h1 {
@@ -27,3 +29,22 @@ h1 {
     float: right;
     margin: 5px;
 }
+.jumbotron {
+    padding-bottom: 7px;
+    margin-bottom: 0px;
+    padding-top: 0px;
+    min-height: 250px;
+}
+.total-price {
+border: 1px solid rosybrown;   
+border-radius: 5px; 
+margin: 0 0;
+}
+input[type=checkbox]{
+    margin: 5px;
+    width: 17px; /*Desired width*/
+    height: 17px; /*Desired height*/
+    
+   
+    }
+     
